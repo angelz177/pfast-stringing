@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
 <title>Tennis Racquet Stringing in Pflugerville, TX | Pfast Reliable Racquet Stringing</title>
 <meta name="description" content="Local tennis racquet stringing in Pflugerville, TX, serving Round Rock, Hutto and north Austin. Usually ready within 24 hours; same-day emergencies when available. Syn gut, poly, hybrid and multifilament from $25 strung. Request online.">
 <link rel="canonical" href="https://pfaststringing.com/">
@@ -43,17 +44,17 @@
   :root{
     --bg:#f7f7f4; --surface:#ffffff; --text:#15171a; --muted:#5f6670;
     --line:#e4e6e1; --accent:#0f7b5f; --accent-ink:#ffffff; --ball:#d4f542;
-    --radius:14px; --maxw:880px;
+    --radius:14px; --maxw:880px; color-scheme:light;
   }
   @media (prefers-color-scheme:dark){
     :root:not([data-theme="light"]){
       --bg:#0f1113; --surface:#171a1d; --text:#eef0ec; --muted:#9aa2ab;
-      --line:#262b30; --accent:#2fc292; --accent-ink:#0b0d0e;
+      --line:#262b30; --accent:#2fc292; --accent-ink:#0b0d0e; color-scheme:dark;
     }
   }
   :root[data-theme="dark"]{
     --bg:#0f1113; --surface:#171a1d; --text:#eef0ec; --muted:#9aa2ab;
-    --line:#262b30; --accent:#2fc292; --accent-ink:#0b0d0e;
+    --line:#262b30; --accent:#2fc292; --accent-ink:#0b0d0e; color-scheme:dark;
   }
 
   *{box-sizing:border-box}
@@ -125,6 +126,9 @@
   input,select,textarea{width:100%;font:inherit;color:var(--text);background:var(--bg);border:1px solid var(--line);
     border-radius:10px;padding:11px 12px;outline:none}
   input:focus,select:focus,textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 25%,transparent)}
+  select{-webkit-appearance:none;appearance:none;padding-right:38px;cursor:pointer;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='9' viewBox='0 0 14 9'%3E%3Cpath d='M1 1l6 6 6-6' fill='none' stroke='%23888' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat:no-repeat;background-position:right 14px center}
   textarea{min-height:96px;resize:vertical}
   .form-foot{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-top:20px}
   .status{font-size:14px;color:var(--muted)}
@@ -218,24 +222,14 @@
         <div class="field full"><label for="string">String</label>
           <select id="string" name="string">
             <option>Not sure — recommend for me</option>
-            <optgroup label="Synthetic gut">
-              <option>Gamma Synthetic Gut 16 — $25</option>
-            </optgroup>
-            <optgroup label="Hybrid">
-              <option>Moto 17 mains / Syn Gut 16 crosses — $30</option>
-            </optgroup>
-            <optgroup label="Polyester">
-              <option>Gamma Moto 17 — $32</option>
-              <option>Solinco Hyper-G Soft 16 — $34</option>
-              <option>Solinco Hyper-G Soft 16L — $34</option>
-              <option>Solinco Mach-10 17 — $36</option>
-            </optgroup>
-            <optgroup label="Multifilament">
-              <option>Gamma Live Wire 16 — $38</option>
-            </optgroup>
-            <optgroup label="Other">
-              <option>I'll bring my own string — $20 labor</option>
-            </optgroup>
+            <option>Syn gut · Gamma Synthetic Gut 16 — $25</option>
+            <option>Hybrid · Moto 17 mains / Syn Gut 16 crosses — $30</option>
+            <option>Poly · Gamma Moto 17 — $32</option>
+            <option>Poly · Solinco Hyper-G Soft 16 — $34</option>
+            <option>Poly · Solinco Hyper-G Soft 16L — $34</option>
+            <option>Poly · Solinco Mach-10 17 — $36</option>
+            <option>Multi · Gamma Live Wire 16 — $38</option>
+            <option>I'll bring my own string — $20 labor</option>
           </select></div>
 
         <div class="field"><label for="tension">Tension <small>(optional)</small></label><input id="tension" name="tension" placeholder='e.g. 55 lbs, or "you pick"'></div>
