@@ -94,12 +94,6 @@
     border-radius:10px;padding:11px 12px;outline:none}
   input:focus,select:focus,textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 25%,transparent)}
   textarea{min-height:96px;resize:vertical}
-  .radio-group{display:grid;gap:8px}
-  .radio{display:flex;gap:10px;align-items:flex-start;padding:12px;border:1px solid var(--line);border-radius:10px;cursor:pointer;background:var(--bg)}
-  .radio:has(input:checked){border-color:var(--accent);box-shadow:0 0 0 2px color-mix(in srgb,var(--accent) 25%,transparent)}
-  .radio input{width:auto;margin-top:3px}
-  .radio b{display:block;font-size:15px}
-  .radio span{color:var(--muted);font-size:13px}
   .form-foot{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-top:20px}
   .status{font-size:14px;color:var(--muted)}
   .status.ok{color:var(--accent);font-weight:600}
@@ -189,20 +183,28 @@
         <div class="field"><label for="qty">How many racquets?</label>
           <select id="qty" name="racquets"><option>1</option><option>2</option><option>3</option><option>4+</option></select></div>
 
-        <div class="field full">
-          <label>String</label>
-          <div class="radio-group">
-            <label class="radio"><input type="radio" name="string" value="Not sure – recommend for me" checked><div><b>Not sure — recommend for me</b><span>Tell me about your game in the notes (arm pain? break strings? balls flying long?)</span></div></label>
-            <label class="radio"><input type="radio" name="string" value="Gamma Synthetic Gut 16 ($25)"><div><b>Gamma Synthetic Gut 16</b><span>$25 · all-rounder</span></div></label>
-            <label class="radio"><input type="radio" name="string" value="Hybrid Moto 17 / Syn Gut 16 ($30)"><div><b>Hybrid · Moto 17 mains / Syn Gut 16 crosses</b><span>$30 · durable, still comfortable</span></div></label>
-            <label class="radio"><input type="radio" name="string" value="Gamma Moto 17 poly ($32)"><div><b>Gamma Moto 17 (poly)</b><span>$32 · spin &amp; control</span></div></label>
-            <label class="radio"><input type="radio" name="string" value="Solinco Hyper-G Soft 16 poly ($34)"><div><b>Solinco Hyper-G Soft 16 (poly)</b><span>$34 · spin &amp; power, softer feel</span></div></label>
-            <label class="radio"><input type="radio" name="string" value="Solinco Hyper-G Soft 16L poly ($34)"><div><b>Solinco Hyper-G Soft 16L (poly)</b><span>$34 · same string, thinner gauge for more spin</span></div></label>
-            <label class="radio"><input type="radio" name="string" value="Solinco Mach-10 17 poly ($36)"><div><b>Solinco Mach-10 17 (poly)</b><span>$36 · soft poly, power &amp; comfort</span></div></label>
-            <label class="radio"><input type="radio" name="string" value="Gamma Live Wire 16 multi ($38)"><div><b>Gamma Live Wire 16 (multi)</b><span>$38 · arm-friendly</span></div></label>
-            <label class="radio"><input type="radio" name="string" value="I'll bring my own string ($20 labor)"><div><b>I'll bring my own string</b><span>$20 labor</span></div></label>
-          </div>
-        </div>
+        <div class="field full"><label for="string">String</label>
+          <select id="string" name="string">
+            <option>Not sure — recommend for me</option>
+            <optgroup label="Synthetic gut">
+              <option>Gamma Synthetic Gut 16 — $25</option>
+            </optgroup>
+            <optgroup label="Hybrid">
+              <option>Moto 17 mains / Syn Gut 16 crosses — $30</option>
+            </optgroup>
+            <optgroup label="Polyester">
+              <option>Gamma Moto 17 — $32</option>
+              <option>Solinco Hyper-G Soft 16 — $34</option>
+              <option>Solinco Hyper-G Soft 16L — $34</option>
+              <option>Solinco Mach-10 17 — $36</option>
+            </optgroup>
+            <optgroup label="Multifilament">
+              <option>Gamma Live Wire 16 — $38</option>
+            </optgroup>
+            <optgroup label="Other">
+              <option>I'll bring my own string — $20 labor</option>
+            </optgroup>
+          </select></div>
 
         <div class="field"><label for="tension">Tension <small>(optional)</small></label><input id="tension" name="tension" placeholder='e.g. 55 lbs, or "you pick"'></div>
         <div class="field"><label for="when">When do you need it?</label>
