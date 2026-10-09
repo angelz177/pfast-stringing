@@ -4,7 +4,7 @@ Single static page (`index.html`). No build step.
 
 ## Setup (one time)
 
-1. **Formspree** — sign up at https://formspree.io (free tier is plenty), create a form pointed at `zpropertytexas@gmail.com`, and copy the form ID. In `index.html`, replace `YOUR_FORM_ID` in the form's `action` with it. Until then, submitting the form opens the visitor's email app instead.
+1. **Formspree** — done. The form posts to `https://formspree.io/f/xbgdonvl`; manage notifications and view submissions at https://formspree.io. Formspree's free tier allows 50 submissions/month.
 2. **Prices / strings** — edit the `#pricing` rows and the radio buttons in the `#request` form.
 3. **GitHub Pages** — create an empty repo on GitHub (e.g. `pfast-stringing`), then:
 
