@@ -18,6 +18,6 @@ Single static page (`index.html`). No build step.
 
 ## Editing
 
-Open `index.html` in any editor. Colors live in the `:root` block at the top of the `<style>`. Commit and push to redeploy.
+Open `index.html` in any editor. Colors, glows and fonts live in the `:root` block at the top of the `<style>`. The look is a dark Tron-style theme: neon cyan edges, a laser grid floor and CRT scanlines (all pure CSS, see the *backdrop* rules). Orbitron (headings) and Exo 2 (body) are self-hosted in `fonts/` under the SIL Open Font License. Commit and push to redeploy.
 
 The drop-off map in the FAQ uses Leaflet with OpenStreetMap tiles (no API key; it loads only when that FAQ item is opened). To move a pin or add a school, edit the `<li>` rows inside `#dropoff`: `data-lat` / `data-lng` place the pin, the letter in `.pin` is its label, and the *Directions* link points to Google Maps.
