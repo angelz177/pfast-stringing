@@ -144,6 +144,30 @@
   details[open] summary::after{content:"–"}
   details p{margin:10px 0 0;color:var(--muted)}
 
+  /* drop-off map (FAQ) — Leaflet + OpenStreetMap */
+  .map{position:relative;height:300px;margin:14px 0 0;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;
+    background:color-mix(in srgb,var(--accent) 6%,var(--surface));isolation:isolate}
+  .map:not(.ready)::before{content:"Loading map…";position:absolute;inset:0;display:grid;place-items:center;color:var(--muted);font-size:14px}
+  @media (max-width:560px){.map{height:240px}}
+  .map.leaflet-container{background:var(--bg);font:inherit;font-size:13px}
+  .map.leaflet-container a{color:var(--accent)}
+  .map.leaflet-container .leaflet-control-attribution{background:color-mix(in srgb,var(--surface) 85%,transparent);color:var(--muted)}
+  .map.leaflet-container .leaflet-bar a{background:var(--surface);color:var(--text);border-bottom-color:var(--line)}
+  .map.leaflet-container .leaflet-bar a.leaflet-disabled{color:var(--muted)}
+  .map.leaflet-container .leaflet-popup-content-wrapper,.map.leaflet-container .leaflet-popup-tip{background:var(--surface);color:var(--text)}
+  .map.leaflet-container .leaflet-popup-content{font-size:14px;line-height:1.45}
+  .map.leaflet-container a.leaflet-popup-close-button{color:var(--muted)}
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .map .leaflet-tile-pane{filter:invert(1) hue-rotate(180deg) brightness(.85) contrast(.9)}}
+  :root[data-theme="dark"] .map .leaflet-tile-pane{filter:invert(1) hue-rotate(180deg) brightness(.85) contrast(.9)}
+  .pin{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--ball);color:#111;
+    font-weight:700;font-size:14px;line-height:1;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.35);flex:none}
+  .map.leaflet-container .pin{display:grid}
+  .spots{list-style:none;margin:14px 0 0;padding:0;display:grid;gap:10px}
+  .spots li{display:flex;align-items:center;gap:12px;font-size:14px;color:var(--muted)}
+  .spots li>div{flex:1;min-width:0}
+  .spots b{display:block;color:var(--text)}
+  .spots a{font-weight:600;text-decoration:none;white-space:nowrap}
+
   footer{border-top:1px solid var(--line);padding:28px 0 40px;color:var(--muted);font-size:14px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
 </style>
 </head>
@@ -263,7 +287,15 @@
     <details><summary>How fast is "usually within 24 hours"?</summary><p>Most racquets are strung the same evening they're dropped off and ready the next day. If something's going to take longer, I'll tell you before you drop it off.</p></details>
     <details><summary>Can you do it today? I have a match.</summary><p>Often, yes — pick "Emergency" on the form and I'll let you know right away whether I can fit it in. It depends on what's already on the bench.</p></details>
     <details><summary>What tension should I ask for?</summary><p>If you're not sure, say "you pick." I'll use the middle of your frame's recommended range (printed on the throat), a bit lower for full poly, and adjust from there next time based on how it felt.</p></details>
-    <details><summary>Where do I drop off?</summary><p>Anywhere around Weiss High School, Hendrickson High School or Pflugerville High School — or in between. I'll suggest a convenient spot and a drop-off window in my reply so we're not guessing at each other's schedules. Pickup works the same way.</p></details>
+    <details id="dropoff"><summary>Where do I drop off?</summary>
+      <p>Anywhere around Weiss High School, Hendrickson High School or Pflugerville High School — or in between. I'll suggest a convenient spot and a drop-off window in my reply so we're not guessing at each other's schedules. Pickup works the same way.</p>
+      <div class="map" id="map" role="region" aria-label="Map of the three drop-off areas"></div>
+      <ul class="spots">
+        <li data-lat="30.429354" data-lng="-97.565589"><span class="pin" aria-hidden="true">W</span><div><b>Weiss High School</b><span class="addr">5201 Wolf Pack Dr, Pflugerville</span></div><a href="https://www.google.com/maps/dir/?api=1&amp;destination=Weiss+High+School%2C+5201+Wolf+Pack+Dr%2C+Pflugerville%2C+TX+78660" target="_blank" rel="noopener">Directions</a></li>
+        <li data-lat="30.4647" data-lng="-97.5881"><span class="pin" aria-hidden="true">H</span><div><b>Hendrickson High School</b><span class="addr">19201 Colorado Sand Dr, Pflugerville</span></div><a href="https://www.google.com/maps/dir/?api=1&amp;destination=Hendrickson+High+School%2C+19201+Colorado+Sand+Dr%2C+Pflugerville%2C+TX+78660" target="_blank" rel="noopener">Directions</a></li>
+        <li data-lat="30.4444" data-lng="-97.6325"><span class="pin" aria-hidden="true">P</span><div><b>Pflugerville High School</b><span class="addr">1301 W Pecan St, Pflugerville</span></div><a href="https://www.google.com/maps/dir/?api=1&amp;destination=Pflugerville+High+School%2C+1301+W+Pecan+St%2C+Pflugerville%2C+TX+78660" target="_blank" rel="noopener">Directions</a></li>
+      </ul>
+    </details>
     <details><summary>How do I pay?</summary><p>Cash, Venmo, or Zelle at pickup.</p></details>
   </section>
 
@@ -308,6 +340,50 @@
       status.innerHTML = `Something went wrong. Email me directly at <a href="mailto:${CONTACT}">${CONTACT}</a>.`;
     } finally { btn.disabled = false; }
   });
+
+  // Drop-off map in the FAQ: Leaflet + OpenStreetMap (no API key), loaded only when that item is opened.
+  // Pins come from the data-lat / data-lng attributes on the #dropoff list items.
+  const dropoff = document.getElementById('dropoff');
+  const mapEl = document.getElementById('map');
+  let leafletReady, dropoffMap;
+
+  const addToHead = (tag, attrs) => new Promise((resolve, reject) => {
+    document.head.appendChild(Object.assign(document.createElement(tag), attrs, { onload: resolve, onerror: reject }));
+  });
+
+  async function showDropoffMap() {
+    if (dropoffMap) { dropoffMap.invalidateSize(); return; }
+    if (!leafletReady) leafletReady = Promise.all([
+      addToHead('link', { rel: 'stylesheet', href: 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css',
+        integrity: 'sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=', crossOrigin: '' }),
+      addToHead('script', { src: 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js',
+        integrity: 'sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=', crossOrigin: '' })
+    ]);
+    try { await leafletReady; } catch { mapEl.hidden = true; return; } // CDN unreachable: the list below still links to directions
+    if (dropoffMap || !dropoff.open) return; // already built, or closed again while loading (the next open retries)
+
+    dropoffMap = L.map(mapEl, { scrollWheelZoom: false, dragging: !L.Browser.mobile }); // phones: pinch to zoom, page keeps scrolling
+    dropoffMap.attributionControl.setPrefix('<a href="https://leafletjs.com">Leaflet</a>');
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19, attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(dropoffMap);
+
+    const spots = [...dropoff.querySelectorAll('.spots li')];
+    const latlng = li => [+li.dataset.lat, +li.dataset.lng];
+    dropoffMap.fitBounds(spots.map(latlng), { padding: [36, 36] }); // set the view first so markers render right away
+    for (const li of spots) {
+      const name = li.querySelector('b').textContent;
+      const icon = L.divIcon({ className: 'pin', html: li.querySelector('.pin').textContent, iconSize: [30, 30], popupAnchor: [0, -16] });
+      L.marker(latlng(li), { icon, title: name }).addTo(dropoffMap)
+        .bindPopup(`<b>${name}</b><br>${li.querySelector('.addr').textContent}<br>` +
+                   `<a href="${li.querySelector('a').href}" target="_blank" rel="noopener">Directions</a>`)
+        .getElement().setAttribute('aria-label', name);
+    }
+    mapEl.classList.add('ready');
+  }
+
+  dropoff.addEventListener('toggle', () => { if (dropoff.open) showDropoffMap(); });
+  if (dropoff.open) showDropoffMap();
 </script>
 </body>
 </html>
