@@ -18,6 +18,6 @@ Single static page (`index.html`). No build step.
 
 ## Editing
 
-Open `index.html` in any editor. Colors and fonts live in the `:root` block at the top of the `<style>`. The look is a tennis-court theme: hard-court blue with white court lines, white scorecard panels, ball-yellow buttons, clay-orange prices and a grass-green footer; the court diagram behind the headline is an inline SVG in the `.hero::before` rule. Barlow and Barlow Semi Condensed are self-hosted in `fonts/` under the SIL Open Font License. Commit and push to redeploy.
+Open `index.html` in any editor. Colors and fonts live in the `:root` block at the top of the `<style>`. The look is a tennis-court theme: hard-court blue with white court lines, white scorecard panels, ball-yellow buttons, clay-orange prices and a grass-green footer; the translucent court behind the hero text is an inline SVG (`.court`), with a CSS mask that dims it under the paragraph. Barlow and Barlow Semi Condensed are self-hosted in `fonts/` under the SIL Open Font License. Commit and push to redeploy.
 
 The drop-off map in the FAQ uses Leaflet with OpenStreetMap tiles (no API key; it loads only when that FAQ item is opened). To move a pin or add a school, edit the `<li>` rows inside `#dropoff`: `data-lat` / `data-lng` place the pin, the letter in `.pin` is its label, and the *Directions* link points to Google Maps.
