@@ -251,19 +251,7 @@
   .confirm p{margin:0;color:var(--ink-muted)}
   .confirm .summary{margin-top:4px}
 
-  /* faq, with the court diagram resting quietly behind its heading */
-  #faq{position:relative}
-  #faq .court{position:absolute;right:-20px;top:-8px;width:min(62%,560px);height:auto;pointer-events:none;
-    -webkit-mask-image:linear-gradient(to left,#000 55%,transparent);mask-image:linear-gradient(to left,#000 55%,transparent)}
-  #faq .court .lines{opacity:.16}
-  html.js #faq .court .lines > *{stroke-dasharray:1;stroke-dashoffset:1}
-  html.js #faq.in .court .lines > *{animation:draw 1.6s var(--ease) forwards}
-  html.js #faq.in .court .lines > :nth-child(2){animation-delay:.2s}
-  html.js #faq.in .court .lines > :nth-child(3){animation-delay:.5s}
-  html.js #faq.in .court .lines > :nth-child(n+4){animation-delay:.8s}
-  @keyframes draw{to{stroke-dashoffset:0}}
-  @media (max-width:720px){#faq .court{width:92%;right:-12px;top:-14px}}
-  #faq > *:not(.court){position:relative}
+  /* faq */
   details{border-top:1px solid var(--line);padding:16px 0}
   details:last-of-type{border-bottom:1px solid var(--line)}
   summary{cursor:pointer;font:700 20px/1.3 var(--display);list-style:none;display:flex;justify-content:space-between;gap:12px;color:#fff}
@@ -315,7 +303,6 @@
   @media (prefers-reduced-motion:reduce){
     *,::before,::after{animation:none!important;transition:none!important}
     html.js .reveal{opacity:1;transform:none} html.js h2::after{transform:none}
-    html.js .court .lines > *{stroke-dashoffset:0}
   }
 </style>
 </head>
@@ -583,14 +570,6 @@
   <section id="faq">
     <p class="eyebrow">Good to know</p>
     <h2>Questions, answered.</h2>
-    <svg class="court" viewBox="-40 -40 860 440" preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false">
-      <g class="lines" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="square">
-        <rect width="780" height="360" pathLength="1"/>
-        <path d="M0 45H780M0 315H780M210 45V315M570 45V315M210 180H570M0 180H14M766 180H780" pathLength="1"/>
-        <path d="M390 -30V390" stroke-width="7" stroke-dasharray="5 4" pathLength="1"/>
-        <circle cx="390" cy="-30" r="8" stroke-width="3" pathLength="1"/><circle cx="390" cy="390" r="8" stroke-width="3" pathLength="1"/>
-      </g>
-    </svg>
     <details><summary>How fast is "usually within 24 hours"?</summary><p>Most racquets are strung the same evening they're dropped off and ready the next day. If something's going to take longer, I'll tell you before you drop it off.</p></details>
     <details><summary>Can you do it today? I have a match.</summary><p>Often, yes. Pick "Emergency" on the form and I'll let you know right away whether I can fit it in. It depends on what's already on the bench.</p></details>
     <details><summary>What tension should I ask for?</summary><p>If you're not sure, say "you pick." I'll use the middle of your frame's recommended range (printed on the throat), a bit lower for full poly, and adjust from there next time based on how it felt.</p></details>
@@ -632,8 +611,8 @@
   const io = new IntersectionObserver(entries => entries.forEach(e => {
     if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
   }), { rootMargin: '0px 0px -8% 0px' });
-  document.querySelectorAll('.reveal, h2, #faq').forEach(el => io.observe(el));
-  setTimeout(() => document.querySelectorAll('.reveal:not(.in), h2:not(.in), #faq:not(.in)').forEach(el => el.classList.add('in')), 3500); // safety net: nothing stays hidden
+  document.querySelectorAll('.reveal, h2').forEach(el => io.observe(el));
+  setTimeout(() => document.querySelectorAll('.reveal:not(.in), h2:not(.in)').forEach(el => el.classList.add('in')), 3500); // safety net: nothing stays hidden
 
   // Phones: dock the request button to the bottom while neither the hero button nor the form is on screen.
   const dock = $('dock'), heroActions = document.querySelector('.hero .actions'), requestSec = $('request');
