@@ -27,4 +27,10 @@ Open `index.html` in any editor. Colors and fonts live in the `:root` block at t
 - **Request form** — three steps (racquet, string & tension, contact); the fields and names are unchanged, so Formspree receives the same submission. The turnaround line under "When do you need it?" is set in the `ETA` array in the script. A confirmation card replaces the form after a successful send.
 - **Phones** — a "Request stringing" button docks to the bottom of the screen while neither the hero button nor the form is on screen.
 
+## Analytics
+
+- **Visits** — Cloudflare Web Analytics (cookie-free). The beacon is the last script tag in `index.html`; the dashboard is in the Cloudflare account under Analytics & Logs → Web Analytics.
+- **Requests sent** — after a successful send the page changes its address to `/request-sent` (no reload), which the beacon records as a page view, so the dashboard's page list shows a `request-sent` row. `request-sent.html` only redirects a reload of that address back home. Formspree's submission count stays the source of truth; ad blockers hide some beacon hits.
+- **Search** — Google Search Console is verified for the whole domain through a TXT record at the registrar, so no tag is needed in the page. `sitemap.xml` is the sitemap to submit there.
+
 The drop-off map in the FAQ uses Leaflet with OpenStreetMap tiles (no API key; it loads only when that FAQ item is opened). To move a pin or add a school, edit the `<li>` rows inside `#dropoff`: `data-lat` / `data-lng` place the pin, the letter in `.pin` is its label, and the *Directions* link points to Google Maps.
