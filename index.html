@@ -660,13 +660,23 @@
     if (e.key === 'Enter' && step < 2 && e.target.tagName !== 'TEXTAREA') { e.preventDefault(); next.click(); }
   });
 
+  // Count sent requests in Cloudflare Web Analytics. The beacon records History-API address changes as page views,
+  // so a successful send shows up there as a "request-sent" row. request-sent.html sends a reload of that address home.
+  const homeUrl = location.pathname + location.search;
+  let sentMarked = false;
+  function markSent() { try { history.pushState(null, '', 'request-sent'); sentMarked = true; } catch {} }
+  function showForm() {
+    $('confirm').hidden = true; form.hidden = false;
+    if (sentMarked) { sentMarked = false; try { history.replaceState(null, '', homeUrl); } catch {} }
+  }
+
   // Choosing a setup on the pricing cards pre-fills the string on step 2.
   document.querySelectorAll('.pick').forEach(b => b.addEventListener('click', () => {
     const card = b.closest('[data-option]');
     $('string').value = card.dataset.option;
     document.querySelectorAll('.picked').forEach(c => c.classList.remove('picked')); card.classList.add('picked');
     const note = $('pickNote'); note.textContent = `Your pick: ${card.querySelector('h3').textContent}. It's set on step 2, and you can change it there.`; note.hidden = false;
-    goTo(0);
+    showForm(); goTo(0);
     requestSec.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
     setTimeout(() => $('racquet').focus({ preventScroll: true }), reduceMotion ? 0 : 500);
   }));
@@ -684,13 +694,13 @@
       document.querySelectorAll('.picked').forEach(c => c.classList.remove('picked'));
       form.hidden = true; const c = $('confirm'); c.hidden = false; c.focus({ preventScroll: true });
       c.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'center' });
-      goTo(0);
+      goTo(0); markSent();
     } catch {
       status.className = 'status err';
       status.innerHTML = `Something went wrong. Email me directly at <a href="mailto:${CONTACT}">${CONTACT}</a>.`;
     } finally { btn.disabled = false; }
   });
-  $('again').addEventListener('click', () => { $('confirm').hidden = true; form.hidden = false; goTo(0); $('racquet').focus(); });
+  $('again').addEventListener('click', () => { showForm(); goTo(0); $('racquet').focus(); });
 
   // ----- Drop-off map in the FAQ: Leaflet + OpenStreetMap (no API key), loaded only when that item is opened. -----
   // Pins come from the data-lat / data-lng attributes on the #dropoff list items.
