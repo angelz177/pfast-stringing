@@ -12,10 +12,10 @@
 <meta property="og:title" content="Tennis Racquet Stringing in Pflugerville, TX">
 <meta property="og:description" content="Usually ready within 24 hours. Same-day emergencies based on availability. Request stringing online.">
 <meta property="og:url" content="https://pfaststringing.com/">
-<meta property="og:image" content="https://pfaststringing.com/og.png">
+<meta property="og:image" content="https://pfaststringing.com/og.png?v=2">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Tennis ball with the text: Tennis racquet stringing, usually back in your hands within 24 hours. Pflugerville, TX.">
+<meta property="og:image:alt" content="Pfast Reliable Racquet Stringing, Pflugerville, TX. Racquet stringing, usually back within 24 hours. From $25.">
 <meta name="twitter:card" content="summary_large_image">
 <script type="application/ld+json">
 {
@@ -50,6 +50,7 @@
 <link rel="manifest" href="/site.webmanifest">
 <link rel="preload" href="fonts/barlow-sc-800.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/barlow-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="img/hero.jpg" as="image" fetchpriority="high">
 <style>
   /* ---------- Edit these to change the look ---------- */
   :root{
@@ -57,9 +58,9 @@
     --grass:#2e7d4f; --clay:#d8602c; --clay-ink:#b4471a;
     --ball:#e6ff3a; --ball-deep:#9dbb1c; --ball-ink:#1a2600;
     --paper:#ffffff; --paper-2:#f3f7fc; --ink:#132238; --ink-muted:#4e5f78; --card-line:rgba(19,34,56,.1); --field-line:#d6e0ec;
-    --text:#ffffff; --muted:rgba(255,255,255,.88); --line:rgba(255,255,255,.4);
-    --display:"Barlow Semi Condensed","Barlow",system-ui,sans-serif;
-    --body:"Barlow",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+    --text:#ffffff; --muted:rgba(255,255,255,.94); --line:rgba(255,255,255,.4); --inset:rgba(13,42,84,.34);
+    --display:"Barlow Semi Condensed","Barlow SC Fallback","Barlow SC Fallback R","Barlow","Barlow Fallback",system-ui,sans-serif;
+    --body:"Barlow","Barlow Fallback","Barlow Fallback R",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
     --radius:20px; --maxw:960px;
     --shadow:0 1px 2px rgba(10,30,60,.06),0 12px 32px rgba(10,30,60,.10);
     --ease:cubic-bezier(.2,.7,.2,1); color-scheme:light;
@@ -69,6 +70,11 @@
   @font-face{font-family:"Barlow";font-weight:600;font-display:swap;src:url(fonts/barlow-600.woff2) format("woff2")}
   @font-face{font-family:"Barlow Semi Condensed";font-weight:700;font-display:swap;src:url(fonts/barlow-sc-700.woff2) format("woff2")}
   @font-face{font-family:"Barlow Semi Condensed";font-weight:800;font-display:swap;src:url(fonts/barlow-sc-800.woff2) format("woff2")}
+  /* Stand-ins shown for the moment before the fonts above arrive: system fonts resized to Barlow's width, so text does not jump when they swap. */
+  @font-face{font-family:"Barlow Fallback";font-weight:400 600;src:local("Arial"),local("ArialMT"),local("Liberation Sans"),local("Arimo");size-adjust:95.5%;ascent-override:104.7%;descent-override:20.9%;line-gap-override:0%}
+  @font-face{font-family:"Barlow Fallback R";font-weight:400 600;src:local("Roboto"),local("Roboto-Regular");size-adjust:96.3%;ascent-override:103.8%;descent-override:20.8%;line-gap-override:0%}
+  @font-face{font-family:"Barlow SC Fallback";font-weight:700 800;src:local("Arial Bold"),local("Arial-BoldMT"),local("Liberation Sans Bold"),local("Arimo Bold");size-adjust:84.7%;ascent-override:118.1%;descent-override:23.6%;line-gap-override:0%}
+  @font-face{font-family:"Barlow SC Fallback R";font-weight:700 800;src:local("Roboto Bold"),local("Roboto-Bold");size-adjust:90.7%;ascent-override:110.3%;descent-override:22.1%;line-gap-override:0%}
 
   *{box-sizing:border-box}
   [hidden]{display:none!important}
@@ -81,27 +87,30 @@
   .card :focus-visible,form :focus-visible,.map :focus-visible{outline-color:var(--court)}
   .wrap{max-width:var(--maxw);margin:0 auto;padding:0 20px}
   .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  .skip{position:absolute;left:16px;top:-64px;z-index:60;background:var(--ball);color:var(--ball-ink);font:800 14px/1 var(--display);letter-spacing:.08em;text-transform:uppercase;text-decoration:none;padding:14px 18px;border-radius:999px;transition:top .15s}
+  .skip:focus{top:12px}
   section{scroll-margin-top:24px}
 
   /* one thin ball-yellow line along the top, with a slow highlight sweep */
   .topline{position:absolute;top:0;left:0;right:0;height:2px;background:rgba(230,255,58,.35);overflow:hidden;z-index:5}
-  .topline i{position:absolute;top:0;bottom:0;left:-40%;width:40%;background:linear-gradient(90deg,transparent,var(--ball),transparent);animation:sweep 7s var(--ease) infinite}
-  @keyframes sweep{0%,12%{left:-40%}70%,100%{left:100%}}
+  .topline i{position:absolute;top:0;bottom:0;left:0;width:40%;background:linear-gradient(90deg,transparent,var(--ball),transparent);transform:translateX(-100%);animation:sweep 2.4s var(--ease) .6s 1 both}
+  @keyframes sweep{to{transform:translateX(250%)}}
 
   /* masthead: header + hero over the photo, with the court blue as an overlay */
   .masthead{position:relative;isolation:isolate;background:var(--court-deep) url(img/hero.jpg) right center/cover no-repeat}
   .masthead::before{content:"";position:absolute;inset:0;z-index:-1;
     background:linear-gradient(90deg,rgba(42,109,184,1) 0%,rgba(42,109,184,.97) 34%,rgba(42,109,184,.7) 64%,rgba(29,82,143,.42) 100%)}
-  @media (max-width:720px){.masthead::before{background:linear-gradient(180deg,rgba(42,109,184,.98) 0%,rgba(42,109,184,.96) 58%,rgba(42,109,184,.55) 100%)}}
+  @media (max-width:720px){.masthead{background-position:38% center}
+    .masthead::before{background:linear-gradient(180deg,rgba(42,109,184,.98) 0%,rgba(42,109,184,.95) 52%,rgba(42,109,184,.6) 100%)}}
   .bar{padding:30px 0 18px;display:flex;align-items:center;justify-content:space-between;gap:12px;border-bottom:1px solid rgba(255,255,255,.35)}
-  .brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:#fff}
+  .brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:#fff;padding:7px 0;margin:-7px 0}
   .brand svg{width:34px;height:34px;flex:none}
   .brand b{display:block;font:800 22px/1 var(--display);letter-spacing:.04em;text-transform:uppercase}
-  .brand small{display:block;margin-top:3px;font:600 11px/1 var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+  .brand small{display:block;margin-top:3px;font:600 12px/1 var(--body);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
   nav{display:flex;align-items:center;gap:24px}
-  nav a{color:#fff;text-decoration:none;font:600 13px/1 var(--body);letter-spacing:.08em;text-transform:uppercase}
-  nav a:not(.cta){opacity:.85;padding:6px 0;border-bottom:2px solid transparent;transition:opacity .15s,border-color .15s}
-  nav a:not(.cta):hover{opacity:1;border-color:var(--ball)}
+  nav a{color:#fff;text-decoration:none;font:600 14px/1 var(--body);letter-spacing:.08em;text-transform:uppercase}
+  nav a:not(.cta){color:var(--muted);padding:16px 2px;margin:-10px 0;text-decoration:underline 2px transparent;text-underline-offset:7px;transition:color .15s,text-decoration-color .15s}
+  nav a:not(.cta):hover{color:#fff;text-decoration-color:var(--ball)}
   @media (max-width:560px){header nav a.cta{display:none} nav{gap:18px} .brand small{display:none} .brand b{font-size:20px} .brand svg{width:30px;height:30px}}
 
   /* buttons: soft lift on hover, press on click, a light sweep across the yellow ones */
@@ -135,14 +144,15 @@
   .lede{font-size:clamp(18px,2.4vw,20px);line-height:1.55;color:#fff;max-width:560px;margin:0 0 30px}
   .actions{display:flex;gap:12px;flex-wrap:wrap}
   .trust{list-style:none;margin:40px 0 0;padding:22px 0 0;border-top:1px solid rgba(255,255,255,.25);display:flex;flex-wrap:wrap;gap:10px 28px;
-    font:600 13px/1.3 var(--body);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+    font:600 14px/1.3 var(--body);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
   .trust li{display:flex;align-items:center;gap:8px}
   .trust li::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--ball)}
   @media (max-width:560px){.trust{font-size:12px;gap:8px 20px;margin-top:32px}}
 
   /* white panels: thin border, soft shadow, generous radius */
   .card{background:var(--paper);color:var(--ink);border:1px solid var(--card-line);border-radius:var(--radius);box-shadow:var(--shadow)}
-  .facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin:-36px 0 0;position:relative;z-index:2}
+  .facts{display:grid;grid-template-columns:1fr;gap:14px;margin:-36px 0 0;position:relative;z-index:2}
+  @media (min-width:600px){.facts{grid-template-columns:repeat(3,1fr)}}
   .fact{padding:24px 26px}
   .fact b{display:block;font:800 34px/1 var(--display);color:var(--court);margin-bottom:8px;font-variant-numeric:tabular-nums}
   .fact span{color:var(--ink-muted);font-size:14px}
@@ -151,12 +161,13 @@
   main section:last-of-type{padding-bottom:88px}
   h2{font:800 clamp(30px,4vw,42px)/1.06 var(--display);letter-spacing:-.005em;margin:0 0 14px;padding-bottom:14px;position:relative;text-wrap:balance}
   h2::after{content:"";position:absolute;left:0;bottom:0;width:56px;height:3px;background:var(--ball);transform-origin:left}
-  html.js h2::after{transform:scaleX(0);transition:transform .7s var(--ease) .1s}
-  html.js h2.in::after{transform:scaleX(1)}
+  html.rv h2::after{transform:scaleX(0);transition:transform .7s var(--ease) .1s}
+  html.rv h2.in::after{transform:scaleX(1)}
   .sub{color:var(--muted);margin:0 0 30px;max-width:580px;font-size:18px}
 
   /* steps */
-  .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;counter-reset:s}
+  .steps{display:grid;grid-template-columns:1fr;gap:16px;counter-reset:s}
+  @media (min-width:700px){.steps{grid-template-columns:repeat(3,1fr)}}
   .step{padding:28px}
   .step::before{counter-increment:s;content:counter(s);display:inline-grid;place-items:center;width:36px;height:36px;border-radius:50%;
     background:var(--ball);color:var(--ball-ink);font:800 16px/1 var(--display);margin-bottom:18px}
@@ -169,28 +180,31 @@
   .setup:hover{transform:translateY(-3px);box-shadow:0 1px 2px rgba(10,30,60,.06),0 18px 40px rgba(10,30,60,.14)}
   .setup.featured{border-color:var(--ball);box-shadow:0 0 0 4px rgba(230,255,58,.35),var(--shadow)}
   .setup.picked,.byo.picked{border-color:var(--court);box-shadow:0 0 0 4px rgba(42,109,184,.2),var(--shadow)}
-  .flag{position:absolute;top:-13px;left:22px;font:800 11px/1 var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--ball-ink);background:var(--ball);padding:8px 11px;border-radius:999px}
+  .flag{position:absolute;top:-13px;left:22px;font:800 12px/1 var(--body);letter-spacing:.12em;text-transform:uppercase;color:var(--ball-ink);background:var(--ball);padding:8px 11px;border-radius:999px}
   .kind{font:600 12px/1 var(--body);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-muted)}
   .setup h3{margin:0;font:800 22px/1.15 var(--display);color:var(--court-deep)}
   .amt{margin:0;font:800 30px/1 var(--display);color:var(--clay-ink);font-variant-numeric:tabular-nums}
   .for{margin:0;color:var(--ink-muted);font-size:15px;line-height:1.5;flex:1}
   .tags{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:6px}
-  .tags li{font:700 11px/1 var(--body);letter-spacing:.08em;text-transform:uppercase;color:var(--court-deep);background:var(--paper-2);border-radius:999px;padding:7px 10px}
+  .tags li{font:600 12px/1 var(--body);color:var(--court-deep);background:var(--paper-2);border-radius:999px;padding:7px 10px}
   .pick{margin-top:8px;width:100%}
   .byo{margin-top:16px;padding:20px 26px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
   .byo h3{margin:0 0 2px;font:800 20px/1.15 var(--display);color:var(--court-deep)}
   .byo p{margin:0;color:var(--ink-muted);font-size:15px}
-  .byo .amt{font-size:26px}
+  .byo .amt{font-size:30px;color:var(--clay-ink)}
   .byo .pick{margin:0;width:auto}
   .byo-right{display:flex;align-items:center;gap:18px}
-  .helper{margin-top:16px;padding:22px 26px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.22);border-radius:var(--radius)}
-  .helper h3{margin:0 0 12px;font:800 19px/1.2 var(--display)}
-  .helper ul{margin:0;padding:0;list-style:none;display:grid;gap:8px 24px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));font-size:15px;color:var(--muted)}
+  .helper{margin-top:16px;padding:22px 26px;background:var(--inset);border:1px solid rgba(255,255,255,.2);border-radius:var(--radius)}
+  .helper h3{margin:0 0 12px;font:800 20px/1.2 var(--display)}
+  .helper ul{margin:0;padding:0;list-style:none;display:grid;gap:8px 24px;grid-template-columns:1fr;font-size:15px;color:var(--muted)}
+  @media (min-width:640px){.helper ul{grid-template-columns:1fr 1fr}}
   .helper b{color:#fff;font-weight:600}
   .helper p{margin:12px 0 0;font-size:14px;color:var(--muted)}
 
   /* the stringer's standard */
-  .tenets{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px}
+  .tenets{display:grid;grid-template-columns:1fr;gap:16px}
+  @media (min-width:560px){.tenets{grid-template-columns:1fr 1fr}}
+  @media (min-width:900px){.tenets{grid-template-columns:repeat(4,1fr)}}
   .tenet h3{text-wrap:balance}
   .tenet{padding:26px}
   .tenet svg{width:30px;height:30px;color:var(--court);margin-bottom:14px;display:block}
@@ -201,10 +215,10 @@
   .gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:16px}
   .gallery figure{margin:0;overflow:hidden;border-radius:var(--radius);border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.06)}
   .gallery img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover}
-  .gallery figcaption{padding:10px 14px;font-size:13px;color:var(--muted)}
+  .gallery figcaption{padding:10px 14px;font-size:14px;color:var(--muted)}
 
   /* trusted-by band */
-  .band{padding:30px 32px;border-radius:var(--radius);background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.22);display:grid;gap:18px 36px;grid-template-columns:1.15fr 1fr;align-items:center}
+  .band{padding:30px 32px;border-radius:var(--radius);background:var(--inset);border:1px solid rgba(255,255,255,.2);display:grid;gap:18px 36px;grid-template-columns:1.15fr 1fr;align-items:center}
   .band h3{margin:0;font:800 clamp(24px,3vw,30px)/1.12 var(--display);text-wrap:balance}
   .band ul{list-style:none;margin:0;padding:0;display:grid;gap:10px;font-size:15px;color:var(--muted)}
   .band li{display:flex;gap:10px;align-items:flex-start}
@@ -215,10 +229,12 @@
 
   /* request form: three short steps */
   form.concierge{padding:28px}
+  @media (max-width:560px){form.concierge{padding:22px 20px} .confirm{padding:24px 20px}}
+  @media (max-width:340px){form.concierge{padding:20px 14px}}
   .progress{display:flex;gap:8px;margin:0 0 12px}
   .progress span{flex:1;height:4px;border-radius:999px;background:var(--paper-2);transition:background .3s}
   .progress span.on{background:var(--ball-deep)}
-  .stepname{margin:0 0 22px;font:600 13px/1.3 var(--body);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-muted)}
+  .stepname{margin:0 0 22px;font:600 14px/1.3 var(--body);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-muted)}
   .stepname b{color:var(--court-deep);margin-right:10px}
   .pick-note{margin:0 0 18px;padding:12px 16px;border-radius:12px;background:#f7ffd6;border:1px solid #dcef8a;color:var(--ball-ink);font-size:14px}
   .panel{border:0;margin:0;padding:0;min-width:0}
@@ -228,10 +244,10 @@
   .field{display:flex;flex-direction:column;gap:7px}
   .field.full{grid-column:1/-1}
   label{font:700 12px/1.4 var(--body);letter-spacing:.1em;text-transform:uppercase;color:var(--court-deep)}
-  label small{color:var(--ink-muted);font-weight:400;letter-spacing:0;text-transform:none}
+  label small{color:var(--ink-muted);font-size:12px;font-weight:400;letter-spacing:0;text-transform:none}
   input,select,textarea{width:100%;font:inherit;color:var(--ink);background:#fff;border:1.5px solid var(--field-line);border-radius:12px;padding:13px 14px;outline:none;
     transition:border-color .12s,box-shadow .12s}
-  input::placeholder,textarea::placeholder{color:#7b8a9c}
+  input::placeholder,textarea::placeholder{color:#66758a}
   input:focus,select:focus,textarea:focus{border-color:var(--court);box-shadow:0 0 0 4px rgba(42,109,184,.18)}
   select{-webkit-appearance:none;appearance:none;padding-right:38px;cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='9' viewBox='0 0 14 9'%3E%3Cpath d='M1 1l6 6 6-6' fill='none' stroke='%231d528f' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center}
   textarea{min-height:110px;resize:vertical}
@@ -252,14 +268,16 @@
   .confirm .summary{margin-top:4px}
 
   /* faq */
-  details{border-top:1px solid var(--line);padding:16px 0}
+  details{border-top:1px solid var(--line)}
+  details[open]{padding-bottom:18px}
   details:last-of-type{border-bottom:1px solid var(--line)}
-  summary{cursor:pointer;font:700 20px/1.3 var(--display);list-style:none;display:flex;justify-content:space-between;gap:12px;color:#fff}
+  summary{cursor:pointer;padding:16px 0;font:700 20px/1.3 var(--display);list-style:none;display:flex;justify-content:space-between;gap:12px;color:#fff}
+  details[open] summary{padding-bottom:10px}
   summary::-webkit-details-marker{display:none}
   summary:hover{color:var(--ball)}
   summary::after{content:"+";color:var(--ball);font-weight:800;font-size:22px;line-height:1}
   details[open] summary::after{content:"–"}
-  details p{margin:10px 0 0;color:var(--muted);max-width:72ch}
+  details p{margin:0;color:var(--muted);max-width:72ch}
 
   /* drop-off map (FAQ) — Leaflet + OpenStreetMap */
   .map{position:relative;height:300px;margin:14px 0 0;border:2px solid #fff;border-radius:var(--radius);overflow:hidden;background:var(--paper-2);isolation:isolate;box-shadow:var(--shadow)}
@@ -272,21 +290,22 @@
   .pin{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--ball);color:var(--ball-ink);
     font:800 14px/1 var(--display);border:2px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.35);flex:none}
   .map.leaflet-container .pin{display:grid}
-  .spots{list-style:none;margin:14px 0 0;padding:0;display:grid;gap:10px}
+  .spots{list-style:none;margin:14px 0 0;padding:0;display:grid;gap:6px}
   .spots li{display:flex;align-items:center;gap:12px;font-size:14px;color:var(--muted)}
   .spots li>div{flex:1;min-width:0}
   .spots b{display:block;color:#fff;font-size:15px}
-  .spots a{font:800 14px/1 var(--display);letter-spacing:.08em;text-transform:uppercase;text-decoration:none;white-space:nowrap}
+  .spots a{display:inline-flex;align-items:center;min-height:44px;padding-left:12px;font:800 14px/1 var(--display);letter-spacing:.08em;text-transform:uppercase;text-decoration:none;white-space:nowrap}
 
   /* footer: the grass outside the court */
-  footer{background:var(--grass);color:rgba(255,255,255,.88);font-size:14px;border-top:3px solid #fff}
+  footer{background:var(--grass);color:#fff;font-size:14px;border-top:3px solid #fff}
   .foot{padding:28px 20px 40px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:18px 28px}
   footer a{color:#fff}
-  .usrsa{display:inline-flex;align-items:center;gap:14px;text-decoration:none;font:700 12px/1.3 var(--body);letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.9)}
+  .usrsa{display:inline-flex;align-items:center;gap:14px;text-decoration:none;font:700 12px/1.3 var(--body);letter-spacing:.1em;text-transform:uppercase;color:#fff}
   .usrsa img{display:block;width:168px;height:auto;padding:6px 10px;background:#fff;border-radius:10px;box-shadow:0 4px 12px rgba(0,0,0,.18);transition:transform .18s var(--ease)}
   .usrsa:hover img{transform:translateY(-2px)}
   .usrsa:hover span{text-decoration:underline;text-underline-offset:4px}
-  .foot-meta{display:grid;gap:4px;justify-items:end;text-align:right}
+  .foot-meta{display:grid;justify-items:end;text-align:right}
+  .foot-meta a{display:inline-block;padding:12px 0}
   @media (max-width:560px){.foot-meta{justify-items:start;text-align:left}}
 
   /* phones: the request action docks to the bottom once the hero button scrolls away */
@@ -297,16 +316,17 @@
   .dock .btn{width:100%}
   @media (min-width:721px){.dock{display:none}}
 
-  /* scroll reveal: a short fade-up for grouped cards; everything is visible without JS */
-  html.js .reveal{opacity:0;transform:translateY(10px);transition:opacity .6s var(--ease),transform .6s var(--ease)}
-  html.js .reveal.in{opacity:1;transform:none}
+  /* scroll reveal: a short fade-up for grouped cards. The "rv" class is only set once the observer is running, so nothing can stay hidden. */
+  html.rv .reveal{opacity:0;transform:translateY(10px);transition:opacity .6s var(--ease),transform .6s var(--ease)}
+  html.rv .reveal.in{opacity:1;transform:none}
   @media (prefers-reduced-motion:reduce){
     *,::before,::after{animation:none!important;transition:none!important}
-    html.js .reveal{opacity:1;transform:none} html.js h2::after{transform:none}
+    .topline i{display:none}
   }
 </style>
 </head>
 <body>
+<a class="skip" href="#main">Skip to content</a>
 <div class="topline" aria-hidden="true"><i></i></div>
 
 <div class="masthead">
@@ -353,7 +373,7 @@
   </section>
 </div>
 
-<main class="wrap">
+<main class="wrap" id="main">
 
   <div class="facts reveal">
     <div class="fact card"><b>~24 hrs</b><span>Typical turnaround from drop-off</span></div>
@@ -405,7 +425,7 @@
         <span class="kind">Polyester</span>
         <h3>Solinco Hyper-G Soft 16 / 16L</h3>
         <p class="amt">$34</p>
-        <p class="for">The popular green poly in its softer version. Big spin and power with less harshness. Say 16 or 16L in your notes.</p>
+        <p class="for">The popular green poly in its softer version. Big spin and power with less harshness. Pick 16 or 16L on the form.</p>
         <ul class="tags"><li>Spin</li><li>Power</li><li>Control</li></ul>
         <button type="button" class="btn quiet pick">Choose this setup</button>
       </article>
@@ -520,21 +540,22 @@
         <div class="grid">
           <div class="field full"><label for="string">String</label>
             <select id="string" name="string">
-              <option>Not sure — recommend for me</option>
-              <option>Syn gut · Gamma Synthetic Gut 16 — $25</option>
-              <option>Hybrid · Moto 17 mains / Syn Gut 16 crosses — $30</option>
-              <option>Poly · Gamma Moto 17 — $32</option>
-              <option>Poly · Solinco Hyper-G Soft 16 — $34</option>
-              <option>Poly · Solinco Hyper-G Soft 16L — $34</option>
-              <option>Poly · Solinco Mach-10 17 — $36</option>
-              <option>Multi · Gamma Live Wire 16 — $38</option>
-              <option>I'll bring my own string — $20 labor</option>
+              <!-- The value is what arrives in your email; the shorter text is what fits on a phone. Card data-option values must match a value here. -->
+              <option value="Not sure — recommend for me">Recommend for me</option>
+              <option value="Syn gut · Gamma Synthetic Gut 16 — $25">Synthetic Gut 16 · $25</option>
+              <option value="Hybrid · Moto 17 mains / Syn Gut 16 crosses — $30">Hybrid Moto / Syn Gut · $30</option>
+              <option value="Poly · Gamma Moto 17 — $32">Gamma Moto 17 · $32</option>
+              <option value="Poly · Solinco Hyper-G Soft 16 — $34">Hyper-G Soft 16 · $34</option>
+              <option value="Poly · Solinco Hyper-G Soft 16L — $34">Hyper-G Soft 16L · $34</option>
+              <option value="Poly · Solinco Mach-10 17 — $36">Mach-10 17 · $36</option>
+              <option value="Multi · Gamma Live Wire 16 — $38">Live Wire 16 · $38</option>
+              <option value="I'll bring my own string — $20 labor">My own string · $20 labor</option>
             </select></div>
           <div class="field"><label for="tension">Tension <small>(optional)</small></label><input id="tension" name="tension" placeholder='e.g. 55 lbs, or "you pick"'></div>
           <div class="field"><label for="when">When do you need it?</label>
             <select id="when" name="timing">
-              <option>Standard — within 24 hours is fine</option>
-              <option>Emergency — as soon as possible (based on availability)</option>
+              <option value="Standard — within 24 hours is fine">Standard, about 24 hours</option>
+              <option value="Emergency — as soon as possible (based on availability)">Emergency, ASAP</option>
             </select></div>
           <p class="note" id="eta">Estimated turnaround: ready within about 24 hours of drop-off.</p>
         </div>
@@ -546,7 +567,7 @@
           <div class="field"><label for="name">Name</label><input id="name" name="name" required autocomplete="name"></div>
           <div class="field"><label for="email">Email</label><input id="email" name="email" type="email" required autocomplete="email"></div>
           <div class="field full"><label for="notes">Notes <small>(optional)</small></label>
-            <textarea id="notes" name="notes" placeholder="Anything that helps: how you play, what you're using now, what you'd like to change, when you can drop off."></textarea></div>
+            <textarea id="notes" name="notes" placeholder="How you play, what you use now, and when you can drop off."></textarea></div>
           <p class="summary" id="summary"></p>
         </div>
       </fieldset>
@@ -607,12 +628,16 @@
   const $ = id => document.getElementById(id);
   const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // Reveal headings and card groups as they scroll into view (once).
-  const io = new IntersectionObserver(entries => entries.forEach(e => {
-    if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
-  }), { rootMargin: '0px 0px -8% 0px' });
-  document.querySelectorAll('.reveal, h2').forEach(el => io.observe(el));
-  setTimeout(() => document.querySelectorAll('.reveal:not(.in), h2:not(.in)').forEach(el => el.classList.add('in')), 3500); // safety net: nothing stays hidden
+  // Reveal headings and card groups as they scroll into view (once). Anything already above the screen is shown at once.
+  const revealEls = document.querySelectorAll('.reveal, h2');
+  if ('IntersectionObserver' in window && !reduceMotion) {
+    const io = new IntersectionObserver(entries => entries.forEach(e => {
+      if (e.isIntersecting || e.boundingClientRect.top < 0) { e.target.classList.add('in'); io.unobserve(e.target); }
+    }), { rootMargin: '0px 0px -8% 0px' });
+    document.documentElement.classList.add('rv');
+    revealEls.forEach(el => io.observe(el));
+    addEventListener('beforeprint', () => revealEls.forEach(el => el.classList.add('in')));
+  }
 
   // Phones: dock the request button to the bottom while neither the hero button nor the form is on screen.
   const dock = $('dock'), heroActions = document.querySelector('.hero .actions'), requestSec = $('request');
