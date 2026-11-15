@@ -17,15 +17,16 @@
     font:18px/1.6 "Barlow",system-ui,sans-serif;-webkit-font-smoothing:antialiased;padding:24px 16px;text-align:center}
   main{max-width:520px}
   .ball{width:96px;height:96px;filter:drop-shadow(0 12px 18px rgba(0,0,0,.4));margin:0 auto 20px;display:block}
-  h1{font:800 clamp(40px,9vw,72px)/1 "Barlow Semi Condensed";text-transform:uppercase;margin:0 0 12px;
-    paint-order:stroke fill;-webkit-text-stroke:.06em #2a6db8;text-shadow:.08em .08em 0 #1d528f}
+  h1{font:800 clamp(40px,9vw,64px)/1.04 "Barlow Semi Condensed","Barlow",system-ui,sans-serif;letter-spacing:-.005em;margin:0 0 14px}
   h1 span{color:#e6ff3a}
-  p{margin:0 0 26px;color:rgba(255,255,255,.92)}
-  a.btn{display:inline-block;background:#e6ff3a;color:#1a2600;font:600 16px/1 "Barlow";text-transform:uppercase;letter-spacing:.08em;
-    text-decoration:none;padding:16px 26px;border-radius:999px;box-shadow:0 5px 0 #9dbb1c}
-  a.btn:active{transform:translateY(3px);box-shadow:0 2px 0 #9dbb1c}
-  small{display:block;margin-top:28px;color:rgba(255,255,255,.7)}
-  small a{color:#e6ff3a}
+  p{margin:0 0 28px;color:#fff}
+  a.btn{display:inline-block;background:#e6ff3a;color:#1a2600;font:800 15px/1 "Barlow Semi Condensed","Barlow",system-ui,sans-serif;text-transform:uppercase;letter-spacing:.08em;
+    text-decoration:none;padding:16px 26px;border-radius:999px;box-shadow:0 4px 0 #9dbb1c;transition:transform .18s,box-shadow .18s}
+  a.btn:hover{transform:translateY(-1px);box-shadow:0 5px 0 #9dbb1c}
+  a.btn:active{transform:translateY(2px);box-shadow:0 2px 0 #9dbb1c}
+  small{display:block;margin-top:30px;font-size:16px;color:#fff}
+  small a{color:#fff;text-underline-offset:3px}
+  :focus-visible{outline:3px solid #fff;outline-offset:3px}
 </style>
 </head>
 <body>
